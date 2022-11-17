@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Heading, Image, Spacer } from '@chakra-ui/react';
 import * as React from 'react';
+import HeaderCartButton from '../HeaderCartButton/HeaderCartButton';
 import classes from './Header.module.css'
 
 export interface IHeaderProps {
@@ -13,11 +14,7 @@ export default function Header(props: IHeaderProps) {
                 backgroundColor='teal.500'>
                 <Heading as='h1' size='xl'>React Meals</Heading>
                 <Spacer />
-                <Button
-                    backgroundColor={'white'}
-                    color={'teal.500'}>
-                    Cart
-                </Button>
+                <HeaderCartButton />
             </Box>
             <Box className={classes.main_image}>
                 <img
