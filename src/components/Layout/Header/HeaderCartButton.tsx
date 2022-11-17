@@ -1,6 +1,6 @@
 import { Button, Tag, Text } from '@chakra-ui/react';
 import * as React from 'react';
-import CartIcon from './CartIcon';
+import CartIcon from '../../Cart/CartIcon';
 
 export interface IHeaderCartButtonProps {
 }

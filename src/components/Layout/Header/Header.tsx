@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Heading, Image, Spacer } from '@chakra-ui/react';
 import * as React from 'react';
-import HeaderCartButton from '../HeaderCartButton/HeaderCartButton';
+import HeaderCartButton from './HeaderCartButton';
 import classes from './Header.module.css'
 
 export interface IHeaderProps {
