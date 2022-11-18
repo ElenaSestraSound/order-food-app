@@ -1,13 +1,22 @@
 import { Box, ListItem, UnorderedList } from '@chakra-ui/react';
 import * as React from 'react';
+import MealItem from './MealItem/MealItem';
 import DUMMY_MEALS from './../Data/DummyMeals'
 
 
 export default function AvailableMeals() {
     const mealsList = DUMMY_MEALS.map(meal =>
-        <ListItem>{meal.name}</ListItem>)
+        <MealItem key={meal.id}
+            name={meal.name}
+            description={meal.description}
+            price={meal.price}
+            image={meal.image} />)
     return (
-        <Box as='section'>
+        <Box as='section'
+            padding={'1rem'}
+            maxWidth={'60rem'}
+            width={'90%'}
+            margin={'2rem auto'}>
             <UnorderedList>
                 {mealsList}
             </UnorderedList>
