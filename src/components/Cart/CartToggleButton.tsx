@@ -1,12 +1,12 @@
 import { Button, Tag, Text } from '@chakra-ui/react';
 import React, { useContext } from 'react';
-import CartIcon from '../../Cart/CartIcon';
+import CartIcon from './CartIcon';
 
-export interface IHeaderCartButtonProps {
+export interface ICartToggleButtonProps {
     onClick: () => void
 }
 
-export default function HeaderCartButton(props: IHeaderCartButtonProps) {
+export default function CartToggleButton(props: ICartToggleButtonProps) {
     return (
         <Button
             onClick={props.onClick}

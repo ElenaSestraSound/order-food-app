@@ -1,6 +1,6 @@
-import { Text, Box, Button, Divider, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Spacer } from '@chakra-ui/react';
+import { Text, Box, Button, Divider, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Spacer, UnorderedList } from '@chakra-ui/react';
 import React from 'react';
-import HeaderCartButton from '../Layout/Header/HeaderCartButton';
+import CartToggleButton from './CartToggleButton';
 import CartItem from './CartItem';
 
 export interface ICartProps {
@@ -15,6 +15,7 @@ export default function Cart(props: ICartProps) {
         { id: 'c2', name: 'Snitzel', amount: 4, price: 14.99 }].map(item =>
             <React.Fragment>
                 <CartItem
+                    key={item.id}
                     id={item.id}
                     name={item.name}
                     amount={item.amount}
@@ -24,18 +25,20 @@ export default function Cart(props: ICartProps) {
         )
     return (
         <React.Fragment>
-            <HeaderCartButton onClick={onOpen} />
+            <CartToggleButton onClick={onOpen} />
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Your Order</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        {cartItems}
+                        <UnorderedList>
+                            {cartItems}
+                        </UnorderedList>
                         <Box display='flex' flexDirection='row' marginTop='15px'>
                             <Heading size='md'>Total Amount:</Heading>
                             <Spacer />
-                            <Text>35.99 EUR</Text>
+                            <Text as='b' color='teal' fontSize='lg'>35.99 EUR</Text>
                         </Box>
                     </ModalBody>
                     <ModalFooter>

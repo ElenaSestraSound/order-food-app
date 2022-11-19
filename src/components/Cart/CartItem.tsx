@@ -18,7 +18,7 @@ export default function CartItem(props: ICartItemProps) {
             <Stack display='flex' flexDirection='row' width='100%'>
                 <CardBody>
                     <Heading as='h3' size='md' color={'teal'}>{props.name}</Heading>
-                    <Text>{props.price}</Text>
+                    <Text>{props.price} EUR</Text>
                 </CardBody>
                 <CardFooter>
                     <InputNumber
