@@ -1,13 +1,15 @@
 import { Button, Tag, Text } from '@chakra-ui/react';
-import * as React from 'react';
+import React, { useContext } from 'react';
 import CartIcon from '../../Cart/CartIcon';
 
 export interface IHeaderCartButtonProps {
+    onClick: () => void
 }
 
 export default function HeaderCartButton(props: IHeaderCartButtonProps) {
     return (
         <Button
+            onClick={props.onClick}
             leftIcon={<CartIcon />}
             backgroundColor={'white'}
             color={'teal.500'}>

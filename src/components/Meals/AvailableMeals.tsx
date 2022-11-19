@@ -7,6 +7,7 @@ import DUMMY_MEALS from './../Data/DummyMeals'
 export default function AvailableMeals() {
     const mealsList = DUMMY_MEALS.map(meal =>
         <MealItem key={meal.id}
+            id={meal.id}
             name={meal.name}
             description={meal.description}
             price={meal.price}

@@ -4,6 +4,7 @@ import CartIcon from '../../Cart/CartIcon';
 import MealItemForm from './MealItemForm';
 
 export interface IMealItemProps {
+    id: string,
     name: string,
     description: string,
     price: number,
@@ -36,7 +37,7 @@ export default function MealItem(props: IMealItemProps) {
                         {price}
                     </Text>
                     <Spacer />
-                    <MealItemForm />
+                    <MealItemForm id={props.id} />
                 </CardFooter>
             </Stack>
         </Card>
