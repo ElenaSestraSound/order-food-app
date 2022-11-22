@@ -9,24 +9,28 @@ export interface ICartProps { }
 
 
 export default function Cart(props: ICartProps) {
-    const cartContext = useContext(CartContext)
-    const numberOfCartItems = cartContext.items.reduce((currentNumber, item) => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cartCtx = useContext(CartContext)
+    const numberOfCartItems = cartCtx.items.reduce((currentNumber, item) => {
         return currentNumber + item.amount
     }, 0)
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const cartItems = [
-        { id: 'c1', name: 'Sushi', amount: 2, price: 12.99 },
-        { id: 'c2', name: 'Snitzel', amount: 4, price: 14.99 }].map(item =>
-            <React.Fragment>
-                <CartItem
-                    key={item.id}
-                    id={item.id}
-                    name={item.name}
-                    amount={item.amount}
-                    price={item.price} />
-                <Divider marginTop={'10px'} />
-            </React.Fragment>
-        )
+    // const removeItemHandler = (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
+    //     event.preventDefault()
+    //     cartCtx.removeItem(event.)
+    // }
+    const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`
+    const cartItems = cartCtx.items.map(item =>
+        <React.Fragment key={item.id}>
+            <CartItem
+                id={item.id}
+                name={item.name}
+                amount={item.amount}
+                price={item.price}
+            // removeItem={removeItemHandler} 
+            />
+            <Divider marginTop={'10px'} />
+        </React.Fragment>)
+    const cartHasItems = cartCtx.items.length > 0
     return (
         <React.Fragment>
             <CartToggleButton onClick={onOpen} badge={numberOfCartItems} />
@@ -43,14 +47,12 @@ export default function Cart(props: ICartProps) {
                         <Box display='flex' flexDirection='row' marginTop='15px'>
                             <Heading size='md'>Total Amount:</Heading>
                             <Spacer />
-                            <Text as='b' color='teal' fontSize='lg'>35.99 EUR</Text>
+                            <Text as='b' color='teal' fontSize='lg'>{totalAmount} EUR</Text>
                         </Box>
                     </ModalBody>
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button variant='ghost'>Order</Button>
+                        {cartHasItems && <Button colorScheme='teal' mr={3}>Order</Button>}
+                        <Button variant='ghost' onClick={onClose}>Close</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
