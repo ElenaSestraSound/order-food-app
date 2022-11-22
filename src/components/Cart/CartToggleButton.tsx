@@ -3,6 +3,7 @@ import React, { useContext } from 'react';
 import CartIcon from './CartIcon';
 
 export interface ICartToggleButtonProps {
+    badge: number,
     onClick: () => void
 }
 
@@ -18,7 +19,7 @@ export default function CartToggleButton(props: ICartToggleButtonProps) {
                 size='md'
                 backgroundColor={'teal.50'}
                 color={'teal.500'}
-                marginLeft='5px'>3</Tag>
+                marginLeft='5px'>{props.badge}</Tag>
         </Button>
     );
 }

@@ -1,14 +1,18 @@
 import { Text, Box, Button, Divider, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Spacer, UnorderedList } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext } from 'react';
 import CartToggleButton from './CartToggleButton';
 import CartItem from './CartItem';
 
-export interface ICartProps {
-    // isOpen: boolean,
-    // onClose: () => void
-}
+import CartContext from '../../state/CartContext';
+
+export interface ICartProps { }
+
 
 export default function Cart(props: ICartProps) {
+    const cartContext = useContext(CartContext)
+    const numberOfCartItems = cartContext.items.reduce((currentNumber, item) => {
+        return currentNumber + item.amount
+    }, 0)
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cartItems = [
         { id: 'c1', name: 'Sushi', amount: 2, price: 12.99 },
@@ -25,9 +29,10 @@ export default function Cart(props: ICartProps) {
         )
     return (
         <React.Fragment>
-            <CartToggleButton onClick={onOpen} />
-            <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
+            <CartToggleButton onClick={onOpen} badge={numberOfCartItems} />
+            <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom'>
+                <ModalOverlay bg='blackAlpha.300'
+                    backdropFilter='blur(10px)' />
                 <ModalContent>
                     <ModalHeader>Your Order</ModalHeader>
                     <ModalCloseButton />
