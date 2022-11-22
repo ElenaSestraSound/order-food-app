@@ -1,18 +1,30 @@
 import { Button, Card, CardBody, CardFooter, Heading, IconButton, Image, Spacer, Stack, Text } from '@chakra-ui/react';
-import * as React from 'react';
+import React, { useContext } from 'react';
 import CartIcon from '../../Cart/CartIcon';
 import MealItemForm from './MealItemForm';
+import CartContext from '../../../state/CartContext';
+import CartItem from '../../../state/CartItem';
 
 export interface IMealItemProps {
     id: string,
     name: string,
     description: string,
     price: number,
-    image: string
+    image: string,
 }
 
 export default function MealItem(props: IMealItemProps) {
+    const CartCtx = useContext(CartContext)
     const price = `${props.price.toFixed(2)} EUR`
+
+    const addToCartHandler = (amount: number) => {
+        CartCtx.addItem({
+            id: props.id,
+            name: props.name,
+            amount: amount,
+            price: props.price
+        } as CartItem)
+    }
     return (
         <Card
             direction={{ base: 'column', sm: 'row' }}
@@ -37,7 +49,7 @@ export default function MealItem(props: IMealItemProps) {
                         {price}
                     </Text>
                     <Spacer />
-                    <MealItemForm id={props.id} />
+                    <MealItemForm id={props.id} onAddToCart={addToCartHandler} />
                 </CardFooter>
             </Stack>
         </Card>

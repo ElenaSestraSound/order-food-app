@@ -9,10 +9,10 @@ export interface IInputNumberProps {
     maxW: string
 }
 
-export default function InputNumber(props: IInputNumberProps) {
+const InputNumber = React.forwardRef((props: IInputNumberProps, ref: React.LegacyRef<HTMLInputElement>) => {
     return (
         <NumberInput maxW={props.maxW} id={props.id} min={props.min} max={props.max} defaultValue={props.default}>
-            <NumberInputField />
+            <NumberInputField ref={ref} />
             <NumberInputStepper>
                 <NumberIncrementStepper
                     bg='green.200'
@@ -27,4 +27,6 @@ export default function InputNumber(props: IInputNumberProps) {
             </NumberInputStepper>
         </NumberInput >
     );
-}
+})
+
+export default InputNumber

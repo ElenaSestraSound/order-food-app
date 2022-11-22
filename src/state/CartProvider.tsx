@@ -2,15 +2,11 @@ import React, { useReducer } from 'react';
 import CartContext from './CartContext';
 import CartItem from './CartItem';
 
-export interface ICartProviderProps {
-    children?: JSX.Element | JSX.Element[]
-}
 enum CartActionKind {
     ADD = 'ADD_CART_ITEM',
     REMOVE = 'REMOVE_CART_ITEM'
 }
 interface CartAction {
-
     type: CartActionKind,
     item: CartItem
 }
@@ -23,7 +19,7 @@ const defaultCartState: CartState = {
     totalAmount: 0
 }
 const cartReducer = (state: CartState, action: CartAction) => {
-    if (action.type == 'ADD_CART_ITEM') {
+    if (action.type === 'ADD_CART_ITEM') {
         const updatedItems = state.items.concat(action.item)
         const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount
         return {
@@ -33,7 +29,11 @@ const cartReducer = (state: CartState, action: CartAction) => {
     }
     return defaultCartState
 }
-const CartProvider: React.FC = (props: ICartProviderProps) => {
+
+type ICartProviderProps = {
+    children?: React.ReactNode
+}
+const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
     const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultCartState)
 
     const addItemToCartHandler = (item: CartItem) => {
@@ -49,7 +49,7 @@ const CartProvider: React.FC = (props: ICartProviderProps) => {
 
     return (
         <CartContext.Provider value={cartContext}>
-            {props.children}
+            {children}
         </CartContext.Provider>
     );
 }
