@@ -14,10 +14,10 @@ export default function Cart(props: ICartProps) {
     const numberOfCartItems = cartCtx.items.reduce((currentNumber, item) => {
         return currentNumber + item.amount
     }, 0)
-    // const removeItemHandler = (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
-    //     event.preventDefault()
-    //     cartCtx.removeItem(event.)
-    // }
+    const removeItemHandler = (id: string) => {
+        cartCtx.removeItem(id)
+    }
+
     const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`
     const cartItems = cartCtx.items.map(item =>
         <React.Fragment key={item.id}>
@@ -26,7 +26,7 @@ export default function Cart(props: ICartProps) {
                 name={item.name}
                 amount={item.amount}
                 price={item.price}
-            // removeItem={removeItemHandler} 
+                removeItem={removeItemHandler}
             />
             <Divider marginTop={'10px'} />
         </React.Fragment>)

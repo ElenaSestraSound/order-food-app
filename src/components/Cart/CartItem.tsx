@@ -8,10 +8,13 @@ export interface ICartItemProps {
     name: string,
     amount: number,
     price: number,
-    //removeItem: (event: React.MouseEvent<HTMLButtonElement>) => void
+    removeItem: (id: string) => void
 }
 
 export default function CartItem(props: ICartItemProps) {
+    const removeItemHandler = () => {
+        props.removeItem(props.id)
+    }
     return (
         <Card
             direction={{ base: 'column', sm: 'row' }}
@@ -29,7 +32,7 @@ export default function CartItem(props: ICartItemProps) {
                         min={1} max={5}
                         default={props.amount} />
                     <IconButton
-                        //onClick={props.removeItem}
+                        onClick={removeItemHandler}
                         aria-label='add to cart'
                         icon={<DeleteIcon />}
                         colorScheme='red'
