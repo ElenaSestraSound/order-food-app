@@ -4,11 +4,12 @@ import CartItem from './CartItem';
 
 enum CartActionKind {
     ADD = 'ADD_CART_ITEM',
-    REMOVE = 'REMOVE_CART_ITEM'
+    REMOVE = 'REMOVE_CART_ITEM',
+    CLEAR = 'REMOVE_ALL_OF_TYPE'
 }
 interface CartAction {
     type: CartActionKind,
-    item: CartItem
+    item: CartItem | string
 }
 interface CartState {
     items: CartItem[],
@@ -20,22 +21,54 @@ const defaultCartState: CartState = {
 }
 
 const cartReducer = (state: CartState, action: CartAction) => {
-    if (action.type === 'ADD_CART_ITEM') {
-        const updatedTotalAmount = state.totalAmount + action.item.amount * action.item.price
+    if (action.type === CartActionKind.ADD) {
+        const newItem: CartItem = action.item as CartItem
+        const updatedTotalAmount = state.totalAmount + newItem.amount * newItem.price
+        console.log("🚀 ~ file: CartProvider.tsx ~ line 56 ~ cartReducer ~ state.items", state.items)
         //Trying to find if in the cart there is already an item of that type to update it or create a new one
-        const existingCartItemIndex = state.items.findIndex(item => item.id === action.item.id)
+        const existingCartItemIndex = state.items.findIndex(item => item.id === newItem.id)
         const existingCartItem = state.items[existingCartItemIndex]
         let updatedItems;
         if (existingCartItem) {
             const updatedItem = {
                 ...existingCartItem,
-                amount: existingCartItem.amount + action.item.amount
+                amount: existingCartItem.amount + newItem.amount
             }
             updatedItems = [...state.items]
             updatedItems[existingCartItemIndex] = updatedItem
         } else {
-            updatedItems = state.items.concat(action.item)
+            updatedItems = state.items.concat(newItem)
         }
+        console.log("🚀 ~ file: CartProvider.tsx ~ line 75 ~ cartReducer ~ updatedItems", updatedItems)
+
+        return {
+            items: updatedItems as CartItem[],
+            totalAmount: updatedTotalAmount
+        }
+
+    }
+    if (action.type === CartActionKind.REMOVE) {
+        const removedItemId: string = action.item as string
+        const existingCartItemIndex = state.items.findIndex(item => item.id === removedItemId)
+        const existingCartItem = state.items[existingCartItemIndex]
+        const updatedTotalAmount = state.totalAmount - existingCartItem.price
+        const updatedItem = { ...existingCartItem, amount: existingCartItem.amount - 1 }
+        const updatedItems = [...state.items]
+        updatedItems[existingCartItemIndex] = updatedItem
+
+        return {
+            items: updatedItems,
+            totalAmount: updatedTotalAmount
+        }
+
+    }
+    if (action.type === CartActionKind.CLEAR) {
+        const removedItemId: string = action.item as string
+        const existingCartItemIndex = state.items.findIndex(item => item.id === removedItemId)
+        const existingCartItem = state.items[existingCartItemIndex]
+        const updatedTotalAmount = state.totalAmount - existingCartItem.price * existingCartItem.amount
+        const updatedItems = state.items.filter(item => item.id !== removedItemId)
+
         return {
             items: updatedItems,
             totalAmount: updatedTotalAmount
@@ -54,13 +87,18 @@ const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
         dispatchCartAction({ type: CartActionKind.ADD, item: item })
     }
     const removeItemFromCartHandler = (id: string) => {
-        //dispatchCartAction({ type: CartActionKind.REMOVE, id: id })
+        dispatchCartAction({ type: CartActionKind.REMOVE, item: id })
+    }
+
+    const removeAllItemsOfTypeFromCartHandler = (id: string) => {
+        dispatchCartAction({ type: CartActionKind.CLEAR, item: id })
     }
     const cartContext = {
         items: cartState.items,
         totalAmount: cartState.totalAmount,
         addItem: addItemToCartHandler,
-        removeItem: removeItemFromCartHandler
+        removeItem: removeItemFromCartHandler,
+        removeAllItemsOfType: removeAllItemsOfTypeFromCartHandler
     }
 
     return (

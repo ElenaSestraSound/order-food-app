@@ -14,16 +14,18 @@ export interface IMealItemProps {
 }
 
 export default function MealItem(props: IMealItemProps) {
-    const CartCtx = useContext(CartContext)
+    const cartCtx = useContext(CartContext)
     const price = `${props.price.toFixed(2)} EUR`
 
     const addToCartHandler = (amount: number) => {
-        CartCtx.addItem({
+        cartCtx.addItem({
             id: props.id,
             name: props.name,
             amount: amount,
             price: props.price
         } as CartItem)
+        console.log("🚀 ~ file: MealItem.tsx ~ line 27 ~ addToCartHandler ~ cartCtx", cartCtx.items)
+
     }
     return (
         <Card

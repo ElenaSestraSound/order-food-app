@@ -5,7 +5,8 @@ interface AppContextInterface {
     items: CartItem[],
     totalAmount: number,
     addItem: (item: CartItem) => void,
-    removeItem: (id: string) => void
+    removeItem: (id: string) => void,
+    removeAllItemsOfType: (id: string) => void,
 }
 
 const CartContext = React.createContext<AppContextInterface>(
@@ -13,7 +14,8 @@ const CartContext = React.createContext<AppContextInterface>(
         items: [],
         totalAmount: 0,
         addItem: () => { },
-        removeItem: () => { }
+        removeItem: () => { },
+        removeAllItemsOfType: () => { }
     }
 )
 

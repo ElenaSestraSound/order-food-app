@@ -1,9 +1,11 @@
 import { Text, Box, Button, Divider, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Spacer, UnorderedList } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import CartToggleButton from './CartToggleButton';
-import CartItem from './CartItem';
 
 import CartContext from '../../state/CartContext';
+import CartItemModel from './CartItemModel';
+import CartItemComponent from './CartItemComponent';
+import CartItem from '../../state/CartItem';
 
 export interface ICartProps { }
 
@@ -14,19 +16,26 @@ export default function Cart(props: ICartProps) {
     const numberOfCartItems = cartCtx.items.reduce((currentNumber, item) => {
         return currentNumber + item.amount
     }, 0)
+
+    const removeAllItemsOfTypeHandler = (id: string) => {
+        cartCtx.removeAllItemsOfType(id)
+    }
     const removeItemHandler = (id: string) => {
         cartCtx.removeItem(id)
     }
+    const addItemHandler = (item: CartItemModel) => {
+        console.log("🚀 ~ file: Cart.tsx ~ line 27 ~ addItemHandler ~ cartCtx", cartCtx.items)
+        cartCtx.addItem(item as CartItem)
+    }
 
-    const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`
-    const cartItems = cartCtx.items.map(item =>
+    const totalAmount = `${cartCtx.totalAmount.toFixed(2)}`
+    const cartItems = cartCtx.items.map((item: CartItemModel) =>
         <React.Fragment key={item.id}>
-            <CartItem
-                id={item.id}
-                name={item.name}
-                amount={item.amount}
-                price={item.price}
+            <CartItemComponent
+                item={item as CartItemModel}
+                removeAllItemsOfType={removeAllItemsOfTypeHandler}
                 removeItem={removeItemHandler}
+                addItem={addItemHandler}
             />
             <Divider marginTop={'10px'} />
         </React.Fragment>)
