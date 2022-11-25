@@ -1,8 +1,7 @@
-import { Button, Tag, Text } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import { Button, Tag } from '@chakra-ui/react';
 import CartIcon from './CartIcon';
 
-export interface ICartToggleButtonProps {
+interface ICartToggleButtonProps {
     badge: number,
     onClick: () => void,
     className: string

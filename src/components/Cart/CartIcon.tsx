@@ -1,9 +1,4 @@
-import * as React from 'react';
-
-export interface ICartIconProps {
-}
-
-export default function CartIcon(props: ICartIconProps) {
+export default function CartIcon() {
     return (
         <svg height={'1.35rem'} width={'1.35rem'} style={{ marginRight: '0.5rem' }}
             xmlns='http://www.w3.org/2000/svg'

@@ -1,13 +1,10 @@
-import { Box, Button, Flex, Heading, Image, Spacer, useDisclosure } from '@chakra-ui/react';
+import { Box, Heading, Spacer } from '@chakra-ui/react';
 import * as React from 'react';
 import classes from './Header.module.css'
 import mealsImage from '../../../assets/sushi.jpg'
 import Cart from '../../Cart/Cart';
 
-export interface IHeaderProps {
-}
-
-export default function Header(props: IHeaderProps) {
+export default function Header() {
     return (
         <React.Fragment>
             <Box as='header'

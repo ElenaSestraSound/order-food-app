@@ -1,10 +1,9 @@
-import { CloseIcon, DeleteIcon } from '@chakra-ui/icons';
+import { DeleteIcon } from '@chakra-ui/icons';
 import { Text, Card, CardBody, CardFooter, Heading, Stack, IconButton } from '@chakra-ui/react';
-import * as React from 'react';
 import InputNumber from '../UI/InputNumber';
 import CartItemModel from './CartItemModel';
 
-export interface ICartItemComponentProps {
+interface ICartItemComponentProps {
     item: CartItemModel,
     removeAllItemsOfType: (id: string) => void,
     removeItem: (id: string) => void,
@@ -12,12 +11,8 @@ export interface ICartItemComponentProps {
 }
 
 function CartItemComponent(props: ICartItemComponentProps) {
-    const removeAllItemsOfTypeHandler = () => {
-        props.removeAllItemsOfType(props.item.id)
-    }
-    const removeItemHandler = () => {
-        props.removeItem(props.item.id)
-    }
+    const removeAllItemsOfTypeHandler = () => props.removeAllItemsOfType(props.item.id)
+    const removeItemHandler = () => props.removeItem(props.item.id)
     const addItemHandler = () => {
         const itemOneByOne = props.item
         itemOneByOne.amount = 1
@@ -52,5 +47,4 @@ function CartItemComponent(props: ICartItemComponentProps) {
         </Card>
     );
 }
-
 export default CartItemComponent

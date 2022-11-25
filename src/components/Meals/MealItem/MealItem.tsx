@@ -1,6 +1,5 @@
-import { Button, Card, CardBody, CardFooter, Heading, IconButton, Image, Spacer, Stack, Text, ToastPosition, useToast } from '@chakra-ui/react';
-import React, { useContext } from 'react';
-import CartIcon from '../../Cart/CartIcon';
+import { Card, CardBody, CardFooter, Heading, Image, Spacer, Stack, Text, useToast } from '@chakra-ui/react';
+import { useContext } from 'react';
 import MealItemForm from './MealItemForm';
 import CartContext from '../../../state/CartContext';
 import CartItem from '../../../state/CartItem';
@@ -31,9 +30,7 @@ export default function MealItem(props: IMealItemProps) {
             duration: 3000,
             isClosable: true,
         })
-
         console.log("🚀 ~ file: MealItem.tsx ~ line 27 ~ addToCartHandler ~ cartCtx", cartCtx.items)
-
     }
     return (
         <Card
