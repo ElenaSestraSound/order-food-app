@@ -4,12 +4,14 @@ import CartIcon from './CartIcon';
 
 export interface ICartToggleButtonProps {
     badge: number,
-    onClick: () => void
+    onClick: () => void,
+    className: string
 }
 
 export default function CartToggleButton(props: ICartToggleButtonProps) {
     return (
         <Button
+            className={props.className}
             onClick={props.onClick}
             leftIcon={<CartIcon />}
             backgroundColor={'white'}

@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, Heading, IconButton, Image, Spacer, Stack, Text } from '@chakra-ui/react';
+import { Button, Card, CardBody, CardFooter, Heading, IconButton, Image, Spacer, Stack, Text, ToastPosition, useToast } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import CartIcon from '../../Cart/CartIcon';
 import MealItemForm from './MealItemForm';
@@ -14,6 +14,7 @@ export interface IMealItemProps {
 }
 
 export default function MealItem(props: IMealItemProps) {
+    const toast = useToast()
     const cartCtx = useContext(CartContext)
     const price = `${props.price.toFixed(2)} EUR`
 
@@ -24,6 +25,13 @@ export default function MealItem(props: IMealItemProps) {
             amount: amount,
             price: props.price
         } as CartItem)
+        toast({
+            title: `${props.name.toUpperCase()} added to cart`,
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+        })
+
         console.log("🚀 ~ file: MealItem.tsx ~ line 27 ~ addToCartHandler ~ cartCtx", cartCtx.items)
 
     }
