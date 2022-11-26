@@ -24,7 +24,6 @@ const cartReducer = (state: CartState, action: CartAction) => {
     if (action.type === CartActionKind.ADD) {
         const newItem: CartItem = action.item as CartItem
         const updatedTotalAmount = state.totalAmount + newItem.amount * newItem.price
-        console.log("🚀 ~ file: CartProvider.tsx ~ line 56 ~ cartReducer ~ state.items", state.items)
         //Trying to find if in the cart there is already an item of that type to update it or create a new one
         const existingCartItemIndex = state.items.findIndex(item => item.id === newItem.id)
         const existingCartItem = state.items[existingCartItemIndex]
@@ -39,12 +38,10 @@ const cartReducer = (state: CartState, action: CartAction) => {
         } else {
             updatedItems = state.items.concat(newItem)
         }
-        console.log("🚀 ~ file: CartProvider.tsx ~ line 75 ~ cartReducer ~ updatedItems", updatedItems)
-
         return {
             items: updatedItems as CartItem[],
             totalAmount: updatedTotalAmount
-        }
+        } as CartState
 
     }
     if (action.type === CartActionKind.REMOVE) {
@@ -59,7 +56,7 @@ const cartReducer = (state: CartState, action: CartAction) => {
         return {
             items: updatedItems,
             totalAmount: updatedTotalAmount
-        }
+        } as CartState
 
     }
     if (action.type === CartActionKind.CLEAR) {
@@ -72,7 +69,7 @@ const cartReducer = (state: CartState, action: CartAction) => {
         return {
             items: updatedItems,
             totalAmount: updatedTotalAmount
-        }
+        } as CartState
     }
     return defaultCartState
 }

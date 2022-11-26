@@ -14,8 +14,10 @@ function CartItemComponent(props: ICartItemComponentProps) {
     const removeAllItemsOfTypeHandler = () => props.removeAllItemsOfType(props.item.id)
     const removeItemHandler = () => props.removeItem(props.item.id)
     const addItemHandler = () => {
-        const itemOneByOne = props.item
-        itemOneByOne.amount = 1
+        const itemOneByOne = {
+            ...props.item,
+            amount: 1
+        } as CartItemModel
         props.addItem(itemOneByOne)
     }
     return (
