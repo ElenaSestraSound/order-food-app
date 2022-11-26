@@ -1,10 +1,10 @@
 import React from "react";
-import CartItem from "./CartItem";
+import CartItemModel from "./CartItemModel";
 
 interface AppContextInterface {
-    items: CartItem[],
+    items: CartItemModel[],
     totalAmount: number,
-    addItem: (item: CartItem) => void,
+    addItem: (item: CartItemModel) => void,
     removeItem: (id: string) => void,
     removeAllItemsOfType: (id: string) => void,
 }

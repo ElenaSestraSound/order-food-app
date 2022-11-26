@@ -2,9 +2,8 @@ import { Text, Box, Button, Divider, Heading, Modal, ModalBody, ModalCloseButton
 import React, { useContext, useEffect, useState } from 'react';
 import CartToggleButton from './CartToggleButton';
 import CartContext from '../../../state/CartContext';
-import CartItemModel from './CartItemModel';
-import CartItemComponent from './CartItemComponent';
-import CartItem from '../../../state/CartItem';
+import CartItem from './CartItem';
+import CartItemModel from '../../../state/CartItemModel';
 import classes from './Cart.module.css'
 
 export default function Cart() {
@@ -14,7 +13,7 @@ export default function Cart() {
     //CART HANDLERS-------------------------------------------------------------------------------
     const removeAllItemsOfTypeHandler = (id: string) => cartCtx.removeAllItemsOfType(id)
     const removeItemHandler = (id: string) => cartCtx.removeItem(id)
-    const addItemHandler = (item: CartItemModel) => cartCtx.addItem(item as CartItem)
+    const addItemHandler = (item: CartItemModel) => cartCtx.addItem(item)
 
     //CART BUTTON BUMP ANIMATION------------------------------------------------------------------
     const [btnIsHighlighted, setBtnIsHighlighted] = useState(false)
@@ -35,8 +34,8 @@ export default function Cart() {
     const cartTotalAmount = `${cartCtx.totalAmount.toFixed(2)}`
     const cartItems = cartCtx.items.map((item: CartItemModel) =>
         <React.Fragment key={item.id}>
-            <CartItemComponent
-                item={item as CartItemModel}
+            <CartItem
+                item={item}
                 removeAllItemsOfType={removeAllItemsOfTypeHandler}
                 removeItem={removeItemHandler}
                 addItem={addItemHandler}

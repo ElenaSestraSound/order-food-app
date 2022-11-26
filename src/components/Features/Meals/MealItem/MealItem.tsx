@@ -2,7 +2,7 @@ import { Card, CardBody, CardFooter, Heading, Image, Spacer, Stack, Text, useToa
 import { useContext } from 'react';
 import MealItemForm from './MealItemForm';
 import CartContext from '../../../../state/CartContext';
-import CartItem from '../../../../state/CartItem';
+import CartItemModel from '../../../../state/CartItemModel';
 
 export interface IMealItemProps {
     id: string,
@@ -23,7 +23,7 @@ export default function MealItem(props: IMealItemProps) {
             name: props.name,
             amount: amount,
             price: props.price
-        } as CartItem)
+        } as CartItemModel)
         toast({
             title: `${props.name.toUpperCase()} added to cart`,
             status: 'success',

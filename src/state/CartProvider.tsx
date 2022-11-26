@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import CartContext from './CartContext';
-import CartItem from './CartItem';
+import CartItemModel from './CartItemModel';
 
 enum CartActionKind {
     ADD = 'ADD_CART_ITEM',
@@ -9,10 +9,10 @@ enum CartActionKind {
 }
 interface CartAction {
     type: CartActionKind,
-    item: CartItem | string
+    item: CartItemModel | string
 }
 interface CartState {
-    items: CartItem[],
+    items: CartItemModel[],
     totalAmount: number
 }
 const defaultCartState: CartState = {
@@ -22,7 +22,7 @@ const defaultCartState: CartState = {
 
 const cartReducer = (state: CartState, action: CartAction): CartState => {
     if (action.type === CartActionKind.ADD) {
-        const newItem: CartItem = action.item as CartItem
+        const newItem: CartItemModel = action.item as CartItemModel
         const updatedTotalAmount = state.totalAmount + newItem.amount * newItem.price
         //Trying to find if in the cart there is already an item of that type to update it or create a new one
         const existingCartItemIndex = state.items.findIndex(item => item.id === newItem.id)
@@ -39,7 +39,7 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
             updatedItems = state.items.concat(newItem)
         }
         return {
-            items: updatedItems as CartItem[],
+            items: updatedItems as CartItemModel[],
             totalAmount: updatedTotalAmount
         } as CartState
 
@@ -80,7 +80,7 @@ type ICartProviderProps = {
 const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
     const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultCartState)
 
-    const addItemToCartHandler = (item: CartItem) => {
+    const addItemToCartHandler = (item: CartItemModel) => {
         dispatchCartAction({ type: CartActionKind.ADD, item: item })
     }
     const removeItemFromCartHandler = (id: string) => {
