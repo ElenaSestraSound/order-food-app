@@ -1,11 +1,10 @@
 import { NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper } from '@chakra-ui/react';
 import * as React from 'react';
-import CartItemModel from '../Cart/CartItemModel';
 
 export interface IInputNumberProps {
     id: string,
     min: number,
-    max: number,
+    max?: number,
     default: number,
     maxW: string,
     incrementValue?: () => void

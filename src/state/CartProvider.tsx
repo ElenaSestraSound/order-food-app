@@ -20,7 +20,7 @@ const defaultCartState: CartState = {
     totalAmount: 0
 }
 
-const cartReducer = (state: CartState, action: CartAction) => {
+const cartReducer = (state: CartState, action: CartAction): CartState => {
     if (action.type === CartActionKind.ADD) {
         const newItem: CartItem = action.item as CartItem
         const updatedTotalAmount = state.totalAmount + newItem.amount * newItem.price

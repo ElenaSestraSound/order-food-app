@@ -1,8 +1,9 @@
 import { Box, Heading, Spacer } from '@chakra-ui/react';
 import * as React from 'react';
 import classes from './Header.module.css'
-import mealsImage from '../../../assets/sushi.jpg'
-import Cart from '../../Cart/Cart';
+import mealsImage from './../../../../assets/sushi.jpg'
+import Cart from '../../../Features/Cart/Cart';
+
 
 export default function Header() {
     return (

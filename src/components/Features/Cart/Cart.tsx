@@ -1,10 +1,10 @@
 import { Text, Box, Button, Divider, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Spacer, UnorderedList } from '@chakra-ui/react';
 import React, { useContext, useEffect, useState } from 'react';
 import CartToggleButton from './CartToggleButton';
-import CartContext from '../../state/CartContext';
+import CartContext from '../../../state/CartContext';
 import CartItemModel from './CartItemModel';
 import CartItemComponent from './CartItemComponent';
-import CartItem from '../../state/CartItem';
+import CartItem from '../../../state/CartItem';
 import classes from './Cart.module.css'
 
 export default function Cart() {
@@ -14,10 +14,7 @@ export default function Cart() {
     //CART HANDLERS-------------------------------------------------------------------------------
     const removeAllItemsOfTypeHandler = (id: string) => cartCtx.removeAllItemsOfType(id)
     const removeItemHandler = (id: string) => cartCtx.removeItem(id)
-    const addItemHandler = (item: CartItemModel) => {
-        console.log("🚀 ~ file: Cart.tsx ~ line 27 ~ addItemHandler ~ cartCtx", cartCtx.items)
-        cartCtx.addItem(item as CartItem)
-    }
+    const addItemHandler = (item: CartItemModel) => cartCtx.addItem(item as CartItem)
 
     //CART BUTTON BUMP ANIMATION------------------------------------------------------------------
     const [btnIsHighlighted, setBtnIsHighlighted] = useState(false)

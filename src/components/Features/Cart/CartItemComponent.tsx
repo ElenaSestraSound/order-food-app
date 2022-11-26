@@ -1,6 +1,6 @@
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Text, Card, CardBody, CardFooter, Heading, Stack, IconButton } from '@chakra-ui/react';
-import InputNumber from '../UI/InputNumber';
+import InputNumber from '../../Common/UI/InputNumber';
 import CartItemModel from './CartItemModel';
 
 interface ICartItemComponentProps {
@@ -34,7 +34,7 @@ function CartItemComponent(props: ICartItemComponentProps) {
                     <InputNumber
                         maxW='70px'
                         id={'amount_' + props.item.id}
-                        min={1} max={5}
+                        min={1}
                         default={props.item.amount}
                         incrementValue={addItemHandler.bind(null, props.item)}
                         decrementValue={removeItemHandler.bind(null, props.item.id)} />

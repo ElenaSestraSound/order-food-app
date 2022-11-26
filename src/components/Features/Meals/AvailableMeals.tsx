@@ -1,6 +1,6 @@
 import { Box, UnorderedList } from '@chakra-ui/react';
 import MealItem from './MealItem/MealItem';
-import DUMMY_MEALS from './../Data/DummyMeals'
+import DUMMY_MEALS from '../../../Data/DummyMeals'
 
 export default function AvailableMeals() {
     const mealsList = DUMMY_MEALS.map(meal =>

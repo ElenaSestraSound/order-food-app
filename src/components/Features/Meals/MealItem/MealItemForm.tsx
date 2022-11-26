@@ -1,7 +1,7 @@
 import { FormControl, IconButton } from '@chakra-ui/react';
 import React, { useRef } from 'react';
 import CartIcon from '../../Cart/CartIcon';
-import InputNumber from '../../UI/InputNumber';
+import InputNumber from '../../../Common/UI/InputNumber';
 
 export interface IMealItemFormProps {
     id: string,
@@ -24,7 +24,6 @@ export default function MealItemForm(props: IMealItemFormProps) {
                 maxW='100px'
                 id={'amount' + props.id}
                 min={1}
-                max={5}
                 default={1} />
             <IconButton
                 onClick={submitHandler}
