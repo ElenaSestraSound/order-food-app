@@ -2,22 +2,22 @@ import { useState, useCallback } from "react";
 
 interface RequestConfig {
     url: RequestInfo | URL,
-    method: string,
-    headers: {},
-    body: String
+    method?: string,
+    headers?: {},
+    body?: String
 }
 
 interface HttpRequest {
     isLoading: boolean,
-    error: String,
-    sendRequest: (requestConfig: RequestConfig, applyData: (data: {}) => {}) => Promise<void>
+    hasError: String,
+    sendRequest: (requestConfig: RequestConfig, applyData: (data: any) => void) => Promise<void>
 }
 
-const useHttp = () : HttpRequest => {
+const useHttp = (): HttpRequest => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const sendRequest = useCallback(async (requestConfig: RequestConfig, applyData: (data: {})=>{}) => {
+    const sendRequest = useCallback(async (requestConfig: RequestConfig, applyData: (data: any) => void) => {
         setIsLoading(true);
         setError('');
         try {
@@ -36,7 +36,7 @@ const useHttp = () : HttpRequest => {
             applyData(data)
 
         } catch (err) {
-            if(err instanceof Error) {
+            if (err instanceof Error) {
                 setError(err.message || 'Something went wrong!');
             }
         }
@@ -44,7 +44,7 @@ const useHttp = () : HttpRequest => {
     }, []);
     return {
         isLoading: isLoading,
-        error: error,
+        hasError: error,
         sendRequest: sendRequest
     } as HttpRequest
 }
