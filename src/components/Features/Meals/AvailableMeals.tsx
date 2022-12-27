@@ -3,10 +3,12 @@ import MealItem from './MealItem/MealItem';
 import { useCallback, useEffect, useState } from 'react';
 import MealModel from './MealModel';
 import useHttp from '../../../hooks/use-http';
+import classes from './AvailableMeals.module.css'
 
 export default function AvailableMeals() {
     const [meals, setMeals] = useState<MealModel[]>([])
     const { isLoading, hasError, sendRequest: fetchMeals } = useHttp()
+    const [slideClass, setSlideClass] = useState<string>('')
 
     useEffect(() => {
         const pushMeals = (mealsObj: MealModel[]) => {
@@ -22,13 +24,12 @@ export default function AvailableMeals() {
                 loadedMeals.push(meal)
             }
             setMeals(loadedMeals)
+            setSlideClass(classes.slide)
         }
         fetchMeals(
             { url: "https://basicrestfortesting-default-rtdb.europe-west1.firebasedatabase.app/meals.json" },
             pushMeals)
     }, [fetchMeals])
-
-
 
     const mealsList = meals.map((meal: MealModel) =>
         <MealItem key={meal.id}
@@ -58,7 +59,7 @@ export default function AvailableMeals() {
         </Alert>
     }
     return (
-        <Box as='section'
+        <Box as='section' className={slideClass}
             padding={'1rem'}
             maxWidth={'60rem'}
             width={'90%'}
