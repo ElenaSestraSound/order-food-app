@@ -30,7 +30,6 @@ export default function MealItem(props: IMealItemProps) {
             duration: 3000,
             isClosable: true,
         })
-        console.log("🚀 ~ file: MealItem.tsx ~ line 27 ~ addToCartHandler ~ cartCtx", cartCtx.items)
     }
     return (
         <Card

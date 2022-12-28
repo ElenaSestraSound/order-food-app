@@ -5,6 +5,7 @@ import CartContext from '../../../state/CartContext';
 import CartItem from './CartItem';
 import CartItemModel from '../../../state/CartItemModel';
 import classes from './Cart.module.css'
+import CheckoutForm from './CheckoutForm';
 
 export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -62,6 +63,8 @@ export default function Cart() {
                             <Text as='b' color='teal' fontSize='lg'>{cartTotalAmount} EUR</Text>
                         </Box>
                     </ModalBody>
+                    {cartHasItems && <Divider marginTop={'10px'} />}
+                    {cartHasItems && <CheckoutForm />}
                     <ModalFooter>
                         {cartHasItems && <Button colorScheme='teal' mr={3}>Order</Button>}
                         <Button variant='ghost' onClick={onClose}>Close</Button>
