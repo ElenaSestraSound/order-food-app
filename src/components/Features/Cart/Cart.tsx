@@ -1,11 +1,13 @@
-import { Text, Box, Button, Divider, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Spacer, UnorderedList } from '@chakra-ui/react';
-import React, { useContext, useEffect, useState } from 'react';
+import { Text, Box, Button, Divider, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Spacer, UnorderedList, useToast, ButtonGroup } from '@chakra-ui/react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import CartToggleButton from './CartToggleButton';
 import CartContext from '../../../state/CartContext';
 import CartItem from './CartItem';
 import CartItemModel from '../../../state/CartItemModel';
 import classes from './Cart.module.css'
 import CheckoutForm from './CheckoutForm';
+import useHttp from '../../../hooks/use-http';
+import SendingOrder from './SendingOrder';
 
 export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -44,6 +46,45 @@ export default function Cart() {
             <Divider marginTop={'10px'} />
         </React.Fragment>)
     const cartHasItems = cartCtx.items.length > 0
+
+    const [isCheckout, setCheckout] = useState(false)
+    const onCheckoutHandler = () => {
+        setCheckout(true)
+    }
+
+    const { isLoading, hasError, sendRequest: sendOrder } = useHttp()
+    const toast = useToast()
+    const onConfirmOrder = (userData: {}) => {
+        const orderData = {
+            userData, productData: cartCtx.items
+        }
+        sendOrder({
+            url: 'https://basicrestfortesting-default-rtdb.europe-west1.firebasedatabase.app/orders.json',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: orderData
+        },
+            () => {
+                toast({
+                    title: 'Your order has been sent',
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                })
+                //onClose()
+            }
+        )
+        if (hasError) {
+            toast({
+                title: hasError,
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+            })
+        }
+    }
     return (
         <React.Fragment>
             <CartToggleButton className={buttonClass} onClick={onOpen} badge={numberOfCartItems} />
@@ -51,24 +92,29 @@ export default function Cart() {
                 <ModalOverlay bg='blackAlpha.300'
                     backdropFilter='blur(10px)' />
                 <ModalContent>
-                    <ModalHeader>Your Order</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <UnorderedList>
-                            {cartItems}
-                        </UnorderedList>
-                        <Box display='flex' flexDirection='row' marginTop='15px'>
-                            <Heading size='md'>Total Amount:</Heading>
-                            <Spacer />
-                            <Text as='b' color='teal' fontSize='lg'>{cartTotalAmount} EUR</Text>
-                        </Box>
-                    </ModalBody>
-                    {cartHasItems && <Divider marginTop={'10px'} />}
-                    {cartHasItems && <CheckoutForm />}
-                    <ModalFooter>
-                        {cartHasItems && <Button colorScheme='teal' mr={3}>Order</Button>}
-                        <Button variant='ghost' onClick={onClose}>Close</Button>
-                    </ModalFooter>
+                    {!isLoading && <ModalHeader>Your Order</ModalHeader>}
+                    {!isLoading && <ModalCloseButton />}
+                    {isLoading ? <SendingOrder /> :
+                        <Fragment>
+                            <ModalBody>
+                                <UnorderedList>
+                                    {cartItems}
+                                </UnorderedList>
+                                <Box display='flex' flexDirection='row' marginTop='15px'>
+                                    <Heading size='md'>Total Amount:</Heading>
+                                    <Spacer />
+                                    <Text as='b' color='teal' fontSize='lg'>{cartTotalAmount} EUR</Text>
+                                </Box>
+                            </ModalBody>
+                            {isCheckout && <Divider marginTop={'10px'} />}
+                            {isCheckout && <CheckoutForm onConfirmOrder={onConfirmOrder} />}
+                            {!isCheckout && <ModalFooter>
+                                <ButtonGroup gap={2} mt={3}>
+                                    {cartHasItems && <Button colorScheme='teal' onClick={onCheckoutHandler}>Order</Button>}
+                                    <Button variant='ghost' onClick={onClose}>Close</Button>
+                                </ButtonGroup>
+                            </ModalFooter>}
+                        </Fragment>}
                 </ModalContent>
             </Modal>
         </React.Fragment>

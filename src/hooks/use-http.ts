@@ -4,7 +4,7 @@ interface RequestConfig {
     url: RequestInfo | URL,
     method?: string,
     headers?: {},
-    body?: String
+    body?: any
 }
 
 interface HttpRequest {

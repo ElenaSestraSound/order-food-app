@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, FormHelperText, Heading, Icon, Input, InputGroup, InputLeftElement, Spacer } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Flex, FormControl, FormHelperText, Heading, Icon, Input, InputGroup, InputLeftElement, Spacer } from "@chakra-ui/react";
 import { FormEvent } from "react";
 import useInput from "../../../hooks/use-input";
 import { BiUserCircle, BiBuildingHouse, BiEnvelopeOpen } from "react-icons/bi"
@@ -6,6 +6,7 @@ import { EmailIcon, PhoneIcon } from "@chakra-ui/icons";
 import classes from './Cart.module.css'
 
 export interface ICheckoutFormProps {
+    onConfirmOrder: (userData: {}) => void
 }
 
 export default function CheckoutForm(props: ICheckoutFormProps) {
@@ -83,6 +84,7 @@ export default function CheckoutForm(props: ICheckoutFormProps) {
         if (formIsValid) {
             const formValues = { nameValue, surnameValue, emailValue, phoneValue, addressValue, codeValue }
             console.log("form value: " + JSON.stringify(formValues))
+            props.onConfirmOrder(formValues)
         }
     }
     return (
@@ -181,7 +183,12 @@ export default function CheckoutForm(props: ICheckoutFormProps) {
                         onChange={onCodeChangeHandler} />
                 </InputGroup>
                 {codeHasError && <FormHelperText color='red.500'>Zip code must not be empty</FormHelperText>}
-                <Button type="submit" colorScheme='teal' mt={3} mr={3}>Order</Button>
+                <Box textAlign='right'>
+                    <ButtonGroup gap={2} mt={3} pb='8px'>
+                        <Button type="submit" colorScheme='teal'>Order</Button>
+                        <Button colorScheme='red'>Close</Button>
+                    </ButtonGroup>
+                </Box>
             </FormControl>
         </form>
     );
