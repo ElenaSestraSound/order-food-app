@@ -8,6 +8,7 @@ import classes from './Cart.module.css'
 import CheckoutForm from './CheckoutForm';
 import useHttp from '../../../hooks/use-http';
 import SendingOrder from './SendingOrder';
+import { Buttons } from '@testing-library/user-event/dist/types/system/pointer/buttons';
 
 export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -48,9 +49,17 @@ export default function Cart() {
     const cartHasItems = cartCtx.items.length > 0
 
     const [isCheckout, setCheckout] = useState(false)
-    const onCheckoutHandler = () => {
-        setCheckout(true)
+    const [buttonsAnimationClass, setButtonsAnimationClass] = useState('')
+
+    const onCheckoutToggleHandler = () => {
+        setCheckout(!isCheckout)
+        if (buttonsAnimationClass === '' || classes.slideInLeftReverse) {
+            setButtonsAnimationClass(classes.slideInLeft)
+        } else {
+            setButtonsAnimationClass(classes.slideInLeftReverse)
+        }
     }
+
 
     const { isLoading, hasError, sendRequest: sendOrder } = useHttp()
     const toast = useToast()
@@ -107,10 +116,10 @@ export default function Cart() {
                                 </Box>
                             </ModalBody>
                             {isCheckout && <Divider marginTop={'10px'} />}
-                            {isCheckout && <CheckoutForm onConfirmOrder={onConfirmOrder} />}
+                            {isCheckout && <CheckoutForm onCancelCheckout={onCheckoutToggleHandler} onConfirmOrder={onConfirmOrder} />}
                             {!isCheckout && <ModalFooter>
-                                <ButtonGroup gap={2} mt={3}>
-                                    {cartHasItems && <Button colorScheme='teal' onClick={onCheckoutHandler}>Order</Button>}
+                                <ButtonGroup gap={2} mt={3} className={buttonsAnimationClass}>
+                                    {cartHasItems && <Button colorScheme='teal' onClick={onCheckoutToggleHandler}>Order</Button>}
                                     <Button variant='ghost' onClick={onClose}>Close</Button>
                                 </ButtonGroup>
                             </ModalFooter>}
