@@ -1,21 +1,12 @@
-import { Box, Center, Heading, Spinner } from '@chakra-ui/react';
+import { Box, Center, Heading, Progress, Spinner } from '@chakra-ui/react';
 import * as React from 'react';
 
-export interface ISendingOrderProps {
-}
 
-export default function SendingOrder(props: ISendingOrderProps) {
+export default function SendingOrder() {
     return (
         <Box padding='40px' alignContent='center'>
             <Heading mb='24px'>Sending your order...</Heading>
-            <Center >
-                <Spinner
-                    thickness='6px'
-                    speed='0.65s'
-                    emptyColor='gray.200'
-                    color='teal.500'
-                    size='xl' />
-            </Center>
+            <Progress colorScheme='blue' height='32px' isIndeterminate />
         </Box>
     );
 }

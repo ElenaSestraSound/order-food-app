@@ -9,6 +9,7 @@ import CheckoutForm from './CheckoutForm';
 import useHttp from '../../../hooks/use-http';
 import SendingOrder from './SendingOrder';
 import { Buttons } from '@testing-library/user-event/dist/types/system/pointer/buttons';
+import OrderHasBeenSent from './OrderHasBeenSent';
 
 export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -62,6 +63,7 @@ export default function Cart() {
 
 
     const { isLoading, hasError, sendRequest: sendOrder } = useHttp()
+    const [orderIsSent, setOrderIsSent] = useState(false)
     const toast = useToast()
     const onConfirmOrder = (userData: {}) => {
         const orderData = {
@@ -77,12 +79,13 @@ export default function Cart() {
         },
             () => {
                 toast({
-                    title: 'Your order has been sent',
+                    title: 'We will deliver your order soon',
+                    position: 'top-right',
                     status: 'success',
                     duration: 3000,
                     isClosable: true,
                 })
-                //onClose()
+                setOrderIsSent(true)
             }
         )
         if (hasError) {
@@ -94,16 +97,21 @@ export default function Cart() {
             })
         }
     }
+
+    const closeModal = () => {
+        setOrderIsSent(false)
+        onClose()
+    }
     return (
         <React.Fragment>
             <CartToggleButton className={buttonClass} onClick={onOpen} badge={numberOfCartItems} />
-            <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom'>
+            <Modal isOpen={isOpen} onClose={closeModal} motionPreset='slideInBottom' >
                 <ModalOverlay bg='blackAlpha.300'
                     backdropFilter='blur(10px)' />
                 <ModalContent>
-                    {!isLoading && <ModalHeader>Your Order</ModalHeader>}
+                    {!isLoading && !orderIsSent && <ModalHeader>Your Order</ModalHeader>}
                     {!isLoading && <ModalCloseButton />}
-                    {isLoading ? <SendingOrder /> :
+                    {!isLoading && !orderIsSent &&
                         <Fragment>
                             <ModalBody>
                                 <UnorderedList>
@@ -120,10 +128,13 @@ export default function Cart() {
                             {!isCheckout && <ModalFooter>
                                 <ButtonGroup gap={2} mt={3} className={buttonsAnimationClass}>
                                     {cartHasItems && <Button colorScheme='teal' onClick={onCheckoutToggleHandler}>Order</Button>}
-                                    <Button variant='ghost' onClick={onClose}>Close</Button>
+                                    <Button variant='ghost' onClick={closeModal}>Close</Button>
                                 </ButtonGroup>
                             </ModalFooter>}
-                        </Fragment>}
+                        </Fragment>
+                    }
+                    {isLoading && <SendingOrder />}
+                    {!isLoading && orderIsSent && <OrderHasBeenSent />}
                 </ModalContent>
             </Modal>
         </React.Fragment>
