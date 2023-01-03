@@ -8,7 +8,6 @@ import classes from './Cart.module.css'
 import CheckoutForm from './CheckoutForm';
 import useHttp from '../../../hooks/use-http';
 import SendingOrder from './SendingOrder';
-import { Buttons } from '@testing-library/user-event/dist/types/system/pointer/buttons';
 import OrderHasBeenSent from './OrderHasBeenSent';
 
 export default function Cart() {
@@ -19,6 +18,7 @@ export default function Cart() {
     const removeAllItemsOfTypeHandler = (id: string) => cartCtx.removeAllItemsOfType(id)
     const removeItemHandler = (id: string) => cartCtx.removeItem(id)
     const addItemHandler = (item: CartItemModel) => cartCtx.addItem(item)
+    const emptyCartHandler = () => cartCtx.emptyCart()
 
     //CART BUTTON BUMP ANIMATION------------------------------------------------------------------
     const [btnIsHighlighted, setBtnIsHighlighted] = useState(false)
@@ -85,6 +85,7 @@ export default function Cart() {
                     duration: 3000,
                     isClosable: true,
                 })
+                emptyCartHandler()
                 setOrderIsSent(true)
             }
         )

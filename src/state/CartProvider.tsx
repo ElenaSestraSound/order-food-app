@@ -5,11 +5,12 @@ import CartItemModel from './CartItemModel';
 enum CartActionKind {
     ADD = 'ADD_CART_ITEM',
     REMOVE = 'REMOVE_CART_ITEM',
-    CLEAR = 'REMOVE_ALL_OF_TYPE'
+    CLEAR = 'REMOVE_ALL_OF_TYPE',
+    EMPTY = 'EMPTY_CART'
 }
 interface CartAction {
     type: CartActionKind,
-    item: CartItemModel | string
+    item?: CartItemModel | string
 }
 interface CartState {
     items: CartItemModel[],
@@ -71,6 +72,10 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
             totalAmount: updatedTotalAmount
         } as CartState
     }
+
+    if (action.type == CartActionKind.EMPTY) {
+        return defaultCartState
+    }
     return defaultCartState
 }
 
@@ -90,12 +95,17 @@ const CartProvider: React.FC<ICartProviderProps> = ({ children }) => {
     const removeAllItemsOfTypeFromCartHandler = (id: string) => {
         dispatchCartAction({ type: CartActionKind.CLEAR, item: id })
     }
+
+    const emptyCartHandler = () => {
+        dispatchCartAction({ type: CartActionKind.EMPTY })
+    }
     const cartContext = {
         items: cartState.items,
         totalAmount: cartState.totalAmount,
         addItem: addItemToCartHandler,
         removeItem: removeItemFromCartHandler,
-        removeAllItemsOfType: removeAllItemsOfTypeFromCartHandler
+        removeAllItemsOfType: removeAllItemsOfTypeFromCartHandler,
+        emptyCart: emptyCartHandler
     }
 
     return (

@@ -7,6 +7,7 @@ interface AppContextInterface {
     addItem: (item: CartItemModel) => void,
     removeItem: (id: string) => void,
     removeAllItemsOfType: (id: string) => void,
+    emptyCart: () => void
 }
 
 const CartContext = React.createContext<AppContextInterface>(
@@ -15,7 +16,8 @@ const CartContext = React.createContext<AppContextInterface>(
         totalAmount: 0,
         addItem: () => { },
         removeItem: () => { },
-        removeAllItemsOfType: () => { }
+        removeAllItemsOfType: () => { },
+        emptyCart: () => { }
     }
 )
 
