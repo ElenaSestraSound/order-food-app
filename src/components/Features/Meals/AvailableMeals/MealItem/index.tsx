@@ -1,8 +1,8 @@
 import { Card, CardBody, CardFooter, Heading, Image, Spacer, Stack, Text, useToast } from '@chakra-ui/react';
 import { useContext } from 'react';
 import MealItemForm from './MealItemForm';
-import CartContext from '../../../../../state/CartContext';
-import CartItemModel from '../../../../../state/CartItemModel';
+import CartContext from 'state/CartContext';
+import CartItemModel from 'state/CartItemModel';
 
 export interface IMealItemProps {
     id: string,

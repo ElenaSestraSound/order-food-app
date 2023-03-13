@@ -1,7 +1,7 @@
 import { Box, Heading, Spacer } from '@chakra-ui/react';
 import * as React from 'react';
 import classes from './styles.module.css'
-import mealsImage from './../../../assets/sushi.jpg'
+import mealsImage from 'assets/sushi.jpg'
 import Cart from '../Cart';
 
 

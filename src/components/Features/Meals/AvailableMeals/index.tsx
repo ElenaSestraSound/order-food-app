@@ -1,8 +1,8 @@
 import { Alert, AlertIcon, Box, Spinner, UnorderedList } from '@chakra-ui/react';
 import MealItem from './MealItem';
 import { useEffect, useState } from 'react';
-import MealModel from '../MealModel';
-import useHttp from '../../../../hooks/use-http';
+import MealModel from './MealItem/MealModel';
+import useHttp from 'hooks/use-http';
 import classes from './styles.module.css'
 
 export default function AvailableMeals() {

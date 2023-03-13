@@ -5,10 +5,10 @@ import CartToggleButton from './CartToggleButton';
 import SendingOrder from './SendingOrderModalScreen';
 import OrderHasBeenSent from './OrderHasBeenSentModalScreen';
 import classes from './styles.module.css'
-import CartContext from '../../../state/CartContext';
-import CartItemModel from '../../../state/CartItemModel';
+import CartContext from 'state/CartContext';
+import CartItemModel from 'state/CartItemModel';
 import CheckoutForm from './CheckoutForm';
-import useHttp from '../../../hooks/use-http';
+import useHttp from 'hooks/use-http';
 
 export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure()
