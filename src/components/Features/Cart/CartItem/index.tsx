@@ -1,7 +1,7 @@
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Text, Card, CardBody, CardFooter, Heading, Stack, IconButton } from '@chakra-ui/react';
-import CartItemModel from '../../../state/CartItemModel';
-import InputNumber from '../../Common/UI/InputNumber';
+import CartItemModel from '../../../../state/CartItemModel';
+import InputNumber from '../../../DesignSystem/InputNumber';
 
 interface ICartItemComponentProps {
     item: CartItemModel,

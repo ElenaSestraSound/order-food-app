@@ -1,5 +1,5 @@
 import { Button, Tag } from '@chakra-ui/react';
-import CartIcon from './CartIcon';
+import CartIcon from './cartIcon';
 
 interface ICartToggleButtonProps {
     badge: number,

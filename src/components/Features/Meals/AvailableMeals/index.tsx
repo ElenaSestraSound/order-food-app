@@ -1,9 +1,9 @@
 import { Alert, AlertIcon, Box, Spinner, UnorderedList } from '@chakra-ui/react';
-import MealItem from './MealItem/MealItem';
-import { useCallback, useEffect, useState } from 'react';
-import MealModel from './MealModel';
-import useHttp from '../../../hooks/use-http';
-import classes from './AvailableMeals.module.css'
+import MealItem from './MealItem';
+import { useEffect, useState } from 'react';
+import MealModel from '../MealModel';
+import useHttp from '../../../../hooks/use-http';
+import classes from './styles.module.css'
 
 export default function AvailableMeals() {
     const [meals, setMeals] = useState<MealModel[]>([])
@@ -27,7 +27,7 @@ export default function AvailableMeals() {
             setSlideClass(classes.slide)
         }
         fetchMeals(
-            { url: "https://basicrestfortesting-default-rtdb.europe-west1.firebasedatabase.app/meals.json" },
+            { url: process.env.REACT_APP_MEALS_DATABASE_URL as string },
             pushMeals)
     }, [fetchMeals])
 

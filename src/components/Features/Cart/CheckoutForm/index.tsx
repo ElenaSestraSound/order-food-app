@@ -1,9 +1,9 @@
 import { Box, Button, ButtonGroup, Flex, FormControl, FormHelperText, Heading, Icon, Input, InputGroup, InputLeftElement, Spacer } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
-import useInput from "../../../hooks/use-input";
+import useInput from "../../../../hooks/use-input";
 import { BiUserCircle, BiBuildingHouse, BiEnvelopeOpen } from "react-icons/bi"
 import { EmailIcon, PhoneIcon } from "@chakra-ui/icons";
-import classes from './Cart.module.css'
+import classes from '../styles.module.css'
 
 export interface ICheckoutFormProps {
     onConfirmOrder: (userData: {}) => void

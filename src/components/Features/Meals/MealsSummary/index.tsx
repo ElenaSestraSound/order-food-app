@@ -1,5 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import classes from './MealsSummary.module.css'
+import classes from './styles.module.css'
 
 export default function MealsSummary() {
     return (

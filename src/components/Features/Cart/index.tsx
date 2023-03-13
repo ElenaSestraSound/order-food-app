@@ -1,14 +1,14 @@
 import { Text, Box, Button, Divider, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Spacer, UnorderedList, useToast, ButtonGroup } from '@chakra-ui/react';
 import React, { Fragment, useContext, useEffect, useState } from 'react';
-import CartToggleButton from './CartToggleButton';
-import CartContext from '../../../state/CartContext';
 import CartItem from './CartItem';
+import CartToggleButton from './CartToggleButton';
+import SendingOrder from './SendingOrderModalScreen';
+import OrderHasBeenSent from './OrderHasBeenSentModalScreen';
+import classes from './styles.module.css'
+import CartContext from '../../../state/CartContext';
 import CartItemModel from '../../../state/CartItemModel';
-import classes from './Cart.module.css'
 import CheckoutForm from './CheckoutForm';
 import useHttp from '../../../hooks/use-http';
-import SendingOrder from './SendingOrder';
-import OrderHasBeenSent from './OrderHasBeenSent';
 
 export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -70,7 +70,7 @@ export default function Cart() {
             userData, productData: cartCtx.items
         }
         sendOrder({
-            url: 'https://basicrestfortesting-default-rtdb.europe-west1.firebasedatabase.app/orders.json',
+            url: process.env.REACT_APP_ORDERS_DATABASE_URL as string,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import { FormControl, IconButton } from '@chakra-ui/react';
 import React, { useRef } from 'react';
-import CartIcon from '../../Cart/CartIcon';
-import InputNumber from '../../../Common/UI/InputNumber';
+import CartIcon from '../../../../Cart/CartToggleButton/cartIcon';
+import InputNumber from '../../../../../DesignSystem/InputNumber';
 
 export interface IMealItemFormProps {
     id: string,
