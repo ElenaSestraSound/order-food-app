@@ -52,17 +52,9 @@ export default function Cart() {
     const cartHasItems = cartCtx.items.length > 0
 
     const [isCheckout, setCheckout] = useState(false)
-    const [buttonsAnimationClass, setButtonsAnimationClass] = useState('')
-
     const onCheckoutToggleHandler = () => {
         setCheckout(!isCheckout)
-        if (buttonsAnimationClass === '' || classes.slideInLeftReverse) {
-            setButtonsAnimationClass(classes.slideInLeft)
-        } else {
-            setButtonsAnimationClass(classes.slideInLeftReverse)
-        }
     }
-
 
     //SENDING ORDER MANAGEMENT --------------------------------------------------------
     const { isLoading, hasError, sendRequest: sendOrder } = useHttp()
@@ -142,7 +134,7 @@ export default function Cart() {
                             {isCheckout && <Divider marginTop={'10px'} />}
                             {isCheckout && <CheckoutForm onCancelCheckout={onCheckoutToggleHandler} onConfirmOrder={onConfirmOrder} />}
                             {!isCheckout && <ModalFooter>
-                                <ButtonGroup gap={2} mt={3} className={buttonsAnimationClass}>
+                                <ButtonGroup gap={2} mt={3}>
                                     {cartHasItems && <Button colorScheme='teal' onClick={onCheckoutToggleHandler}>Order</Button>}
                                     <Button variant='ghost' onClick={closeModal}>Close</Button>
                                 </ButtonGroup>
