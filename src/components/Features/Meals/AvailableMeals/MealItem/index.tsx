@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import MealItemForm from './MealItemForm';
 import CartContext from 'state/CartContext';
 import CartItemModel from 'state/CartItemModel';
+import fallbackImage from 'assets/200x233.png'
 
 export interface IMealItemProps {
     id: string,
@@ -42,6 +43,7 @@ export default function MealItem(props: IMealItemProps) {
                 maxW={{ base: '100%', sm: '200px' }}
                 src={props.image}
                 alt='Caffe Latte'
+                fallbackSrc={fallbackImage}
             />
             <Stack display='block' width='100%'>
                 <CardBody>
