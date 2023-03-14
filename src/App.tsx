@@ -2,7 +2,6 @@ import * as React from "react"
 import {
   ChakraProvider,
   theme,
-  useDisclosure,
 } from "@chakra-ui/react"
 import Header from "./components/Features/Header"
 import Meals from "./components/Features/Meals"

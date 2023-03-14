@@ -1,5 +1,4 @@
-import { Box, Center, Heading, Progress, Spinner } from '@chakra-ui/react';
-import * as React from 'react';
+import { Box, Heading, Progress } from '@chakra-ui/react';
 
 export default function OrderHasBeenSent() {
     return (
