@@ -9,6 +9,8 @@ import CartContext from 'state/CartContext';
 import CartItemModel from 'state/CartItemModel';
 import CheckoutForm from './CheckoutForm';
 import useHttp from 'hooks/use-http';
+import ErrorInOrder from './ErrorInOrderModalScreen';
+import { FaLess } from 'react-icons/fa';
 
 export default function Cart() {
     const { isOpen, onOpen, onClose } = useDisclosure()
@@ -62,9 +64,11 @@ export default function Cart() {
     }
 
 
+    //SENDING ORDER MANAGEMENT --------------------------------------------------------
     const { isLoading, hasError, sendRequest: sendOrder } = useHttp()
-
     const [orderIsSent, setOrderIsSent] = useState(false)
+    const [showSendingOrder, setShowSendingOrder] = useState(false)
+    const [showError, setShowError] = useState(false)
     const toast = useToast()
     const onConfirmOrder = (userData: {}) => {
         const orderData = {
@@ -84,22 +88,9 @@ export default function Cart() {
             }
         )
         if (hasError) {
-            toast({
-                title: hasError,
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-            })
+
         }
     }
-
-    const closeModal = () => {
-        setOrderIsSent(false)
-        setCheckout(false)
-        onClose()
-    }
-
-    const [showSendingOrder, setShowSendingOrder] = useState(false)
 
     useEffect(() => {
         if (!isLoading && orderIsSent) {
@@ -111,6 +102,22 @@ export default function Cart() {
             setShowSendingOrder(true)
         }
     }, [setShowSendingOrder, isLoading, orderIsSent])
+
+    useEffect(() => {
+        if (hasError) {
+            setShowError(true)
+        }
+    }, [setShowError, hasError])
+
+    //CLOSING THE CART
+    const closeModal = () => {
+        setOrderIsSent(false)
+        setCheckout(false)
+        setShowError(false)
+        onClose()
+    }
+
+
     return (
         <React.Fragment>
             <CartToggleButton className={buttonClass} onClick={onOpen} badge={numberOfCartItems} />
@@ -118,9 +125,9 @@ export default function Cart() {
                 <ModalOverlay bg='blackAlpha.300'
                     backdropFilter='blur(10px)' />
                 <ModalContent>
-                    {!isLoading && !orderIsSent && <ModalHeader>Your Order</ModalHeader>}
+                    {!isLoading && !orderIsSent && !showError && <ModalHeader>Your Order</ModalHeader>}
                     {!isLoading && <ModalCloseButton />}
-                    {!isLoading && !orderIsSent &&
+                    {!isLoading && !orderIsSent && !showError &&
                         <Fragment>
                             <ModalBody>
                                 <UnorderedList>
@@ -142,8 +149,9 @@ export default function Cart() {
                             </ModalFooter>}
                         </Fragment>
                     }
-                    {showSendingOrder && <SendingOrder />}
+                    {showSendingOrder && !hasError && <SendingOrder />}
                     {!isLoading && orderIsSent && !showSendingOrder && <OrderHasBeenSent />}
+                    {showError && <ErrorInOrder message={hasError} />}
                 </ModalContent>
             </Modal>
         </React.Fragment>
