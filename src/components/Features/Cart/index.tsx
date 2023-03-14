@@ -63,6 +63,7 @@ export default function Cart() {
 
 
     const { isLoading, hasError, sendRequest: sendOrder } = useHttp()
+
     const [orderIsSent, setOrderIsSent] = useState(false)
     const toast = useToast()
     const onConfirmOrder = (userData: {}) => {
@@ -78,13 +79,6 @@ export default function Cart() {
             body: orderData
         },
             () => {
-                toast({
-                    title: 'We will deliver your order soon',
-                    position: 'top-right',
-                    status: 'success',
-                    duration: 3000,
-                    isClosable: true,
-                })
                 emptyCartHandler()
                 setOrderIsSent(true)
             }
@@ -101,8 +95,22 @@ export default function Cart() {
 
     const closeModal = () => {
         setOrderIsSent(false)
+        setCheckout(false)
         onClose()
     }
+
+    const [showSendingOrder, setShowSendingOrder] = useState(false)
+
+    useEffect(() => {
+        if (!isLoading && orderIsSent) {
+            setTimeout(() => {
+                setShowSendingOrder(false)
+            }, 2000)
+        }
+        if (isLoading) {
+            setShowSendingOrder(true)
+        }
+    }, [setShowSendingOrder, isLoading, orderIsSent])
     return (
         <React.Fragment>
             <CartToggleButton className={buttonClass} onClick={onOpen} badge={numberOfCartItems} />
@@ -134,8 +142,8 @@ export default function Cart() {
                             </ModalFooter>}
                         </Fragment>
                     }
-                    {isLoading && <SendingOrder />}
-                    {!isLoading && orderIsSent && <OrderHasBeenSent />}
+                    {showSendingOrder && <SendingOrder />}
+                    {!isLoading && orderIsSent && !showSendingOrder && <OrderHasBeenSent />}
                 </ModalContent>
             </Modal>
         </React.Fragment>
